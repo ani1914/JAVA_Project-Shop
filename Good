@@ -1,0 +1,43 @@
+package com.company;
+
+public class Good {
+    private final int ID;
+    private String nameGood;
+    private double deliveryPrice;
+    private  TypeGood typeGood;
+    private String expirationDate;
+
+    public Good(int ID,String nameGood, double deliveryPrice,TypeGood typeGood, String expirationDate) {
+        this.ID = ID;
+        this.nameGood = nameGood;
+        this.deliveryPrice = deliveryPrice;
+        this.typeGood=typeGood;
+        this.expirationDate = expirationDate;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public String getNameGood() {
+        return nameGood;
+    }
+
+    public double getDeliveryPrice() {
+        return deliveryPrice;
+    }
+   public double totalPriceGood(){
+        deliveryPrice+=deliveryPrice*(typeGood.getPercentageIncrease()/100);
+        return deliveryPrice;
+   }
+    @Override
+    public String toString() {
+        return "Good{" +
+                "ID=" + ID +
+                ", nameGood='" + nameGood + '\'' +
+                ", deliveryPrice=" + deliveryPrice +
+                ", typeGood=" + typeGood +
+                ", expirationDate='" + expirationDate + '\'' +
+                '}';
+    }
+}
