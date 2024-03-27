@@ -1,0 +1,34 @@
+package com.company;
+
+public class OutOfStock extends Exception {
+
+    private final int requestedNumber;
+    private final int availableNumber;
+    private final Good good;
+
+    public OutOfStock(int requestedNumber, int availableNumber, Good good) {
+
+        this.requestedNumber = requestedNumber;
+        this.availableNumber = availableNumber;
+        this.good = good;
+    }
+
+
+    public int getRequestedNumber() {
+        return requestedNumber;
+    }
+
+    public int getAvailableNumber() {
+        return availableNumber;
+    }
+
+    public Good getGood() {
+        return good;
+    }
+
+    @Override
+    public String toString() {
+        return "Not enough good of type " + good.getNameGood() + "(ID=" + good.getID() + ")"
+                + "; available: " + availableNumber + " requested: " + requestedNumber;
+    }
+}
