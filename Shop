@@ -1,0 +1,95 @@
+package com.company;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Shop implements Revenue {
+    public String nameShop;
+    private final ArrayList<Good> goodArrayList;
+    private final ArrayList<Cashier> cashierArrayList;
+    private final ArrayList<Receipt> receiptArrayList;
+
+    public Shop(String nameShop) {
+        this.nameShop = nameShop;
+        this.goodArrayList = new ArrayList<>();
+        this.cashierArrayList = new ArrayList<>();
+        this.receiptArrayList = new ArrayList<>();
+    }
+
+
+    public void addCashier(Cashier cashier) {
+        cashierArrayList.add(cashier);
+    }
+
+    public String getNameShop() {
+        return nameShop;
+    }
+
+    public int goodsInStock(Good good) {
+        int counter = 0;
+        for (Good shopGood : goodArrayList) {
+            if (shopGood.getNameGood().equals(good.getNameGood())) {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    public void RemoveFromGoods(Good good, int amount) {
+        for (int i = 0; i < amount; i++) {
+            goodArrayList.remove(good);
+        }
+    }
+
+    @Override
+    public double profitTotal() {
+        double sum = 0;
+        for (Receipt receipt : receiptArrayList) {
+            sum += receipt.profitTotal();
+        }
+        return sum;
+
+    }
+
+    public void addGoods(Good good, int amount) {
+        for (int i = 0; i < amount; i++) {
+            goodArrayList.add(good);
+        }
+    }
+
+
+    public synchronized void WriteFiles(Receipt receipt) {
+        String outputFilename = receipt.idToString();
+        try (FileWriter fout = new FileWriter(new File(outputFilename), false)) {
+
+            if (this != null) {
+                fout.append(receipt.toString() + System.lineSeparator());
+                fout.close();
+            }
+        } catch (IOException e) {
+            System.out.println("IOException " + e);
+
+        }
+    }
+
+    public void ReadFiles(String name) {
+        try {
+            File input = new File(name);
+            Scanner scanner = new Scanner(input);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                System.out.println(line);
+            }
+            System.out.println();
+        } catch (FileNotFoundException e) {
+            System.err.println("Error");
+        }
+
+    }
+
+
+}
