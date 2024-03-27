@@ -1,0 +1,51 @@
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Good toy = new Good(12,"Toy", 12.5,TypeGood.NonFood, "25/08/2020");
+        Good bike = new Good(15,"Bike", 15.0,TypeGood.NonFood, "25/08/2020");
+        Good Barbie = new Good(14,"Barbie", 25.0,TypeGood.NonFood, "25/08/2020");
+        Good cheese = new Good(13,"Cheese", 6.5,TypeGood.Food, "10/03/2021");
+        Good wine = new Good(16,"Wine", 25.99,TypeGood.Food, "18/7/2025");
+        Good Hogarenas = new Good(17,"Hogarenas", 1.99,TypeGood.Food, "18/7/2025");
+        Shop shop1 = new Shop("Kaufland");
+        TypeGood.Food.setPercentageIncrease(12);
+        TypeGood.NonFood.setPercentageIncrease(10);
+        Cashier Ani = new Cashier("Anna-Maria Mitova",12,520);
+        Cashier Marti = new Cashier("Martin Kiriazov",23,670);
+        shop1.addCashier(Ani);
+        shop1.addCashier(Marti);
+        shop1.addGoods(toy, 13);
+        shop1.addGoods(bike, 13);
+        shop1.addGoods(Barbie, 2);
+        shop1.addGoods(cheese, 14);
+        shop1.addGoods(wine, 7);
+        shop1.addGoods(Hogarenas, 17);
+        CashDesk first = new CashDesk(Ani, shop1);
+        CashDesk second = new CashDesk(Marti, shop1);
+        Thread one = new Thread(first, "First");
+        Thread two = new Thread(second, "Second");
+
+
+        try {
+            first.Sell(wine, 3);
+            first.Sell(toy, 3);
+            first.Sell(Hogarenas, 2);
+            first.Sell(cheese, 2);
+            one.start();
+            second.Sell(toy, 1);
+            second.Sell(Barbie, 1);
+            two.start();
+
+
+        } catch (OutOfStock e) {
+            System.err.println("Error: " + e);
+        }
+        String FileName = "1";
+        shop1.ReadFiles(FileName);
+        String FileName2 = "2";
+        shop1.ReadFiles(FileName2);
+
+    }
+}
